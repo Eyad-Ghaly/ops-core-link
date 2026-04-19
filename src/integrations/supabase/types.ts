@@ -14,16 +14,544 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_log: {
+        Row: {
+          action: string
+          changed_at: string
+          changed_by: string | null
+          diff: Json | null
+          id: string
+          record_id: string
+          table_name: string
+        }
+        Insert: {
+          action: string
+          changed_at?: string
+          changed_by?: string | null
+          diff?: Json | null
+          id?: string
+          record_id: string
+          table_name: string
+        }
+        Update: {
+          action?: string
+          changed_at?: string
+          changed_by?: string | null
+          diff?: Json | null
+          id?: string
+          record_id?: string
+          table_name?: string
+        }
+        Relationships: []
+      }
+      dropdown_options: {
+        Row: {
+          active: boolean
+          created_at: string
+          field_key: string
+          id: string
+          label: string
+          value: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          field_key: string
+          id?: string
+          label: string
+          value: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          field_key?: string
+          id?: string
+          label?: string
+          value?: string
+        }
+        Relationships: []
+      }
+      mission_code_sequences: {
+        Row: {
+          last_seq: number
+          team_code: string
+        }
+        Insert: {
+          last_seq?: number
+          team_code: string
+        }
+        Update: {
+          last_seq?: number
+          team_code?: string
+        }
+        Relationships: []
+      }
+      mission_drivers: {
+        Row: {
+          created_at: string
+          driver_name: string
+          id: string
+          mission_id: string
+          vehicle_number: string | null
+        }
+        Insert: {
+          created_at?: string
+          driver_name: string
+          id?: string
+          mission_id: string
+          vehicle_number?: string | null
+        }
+        Update: {
+          created_at?: string
+          driver_name?: string
+          id?: string
+          mission_id?: string
+          vehicle_number?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_drivers_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mission_routes: {
+        Row: {
+          created_at: string
+          id: string
+          mission_id: string
+          place: string
+          position: number
+          route_time: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mission_id: string
+          place: string
+          position?: number
+          route_time?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mission_id?: string
+          place?: string
+          position?: number
+          route_time?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_routes_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mission_volunteers: {
+        Row: {
+          added_in_ops: boolean
+          arrival_time: string | null
+          branch: string | null
+          change_note: string | null
+          change_reason:
+            | Database["public"]["Enums"]["volunteer_change_reason"]
+            | null
+          created_at: string
+          departure_time: string | null
+          full_name: string
+          hours: number | null
+          id: string
+          membership_number: string | null
+          mission_id: string
+          points: number | null
+          removed: boolean
+          updated_at: string
+        }
+        Insert: {
+          added_in_ops?: boolean
+          arrival_time?: string | null
+          branch?: string | null
+          change_note?: string | null
+          change_reason?:
+            | Database["public"]["Enums"]["volunteer_change_reason"]
+            | null
+          created_at?: string
+          departure_time?: string | null
+          full_name: string
+          hours?: number | null
+          id?: string
+          membership_number?: string | null
+          mission_id: string
+          points?: number | null
+          removed?: boolean
+          updated_at?: string
+        }
+        Update: {
+          added_in_ops?: boolean
+          arrival_time?: string | null
+          branch?: string | null
+          change_note?: string | null
+          change_reason?:
+            | Database["public"]["Enums"]["volunteer_change_reason"]
+            | null
+          created_at?: string
+          departure_time?: string | null
+          full_name?: string
+          hours?: number | null
+          id?: string
+          membership_number?: string | null
+          mission_id?: string
+          points?: number | null
+          removed?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mission_volunteers_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      missions: {
+        Row: {
+          activity_classification: string | null
+          activity_date: string
+          activity_details: string | null
+          activity_type: string | null
+          admin_code: string | null
+          classification: string | null
+          classification_name: string | null
+          completing_volunteer: string | null
+          created_at: string
+          created_by: string
+          data_sources: Database["public"]["Enums"]["data_source"][] | null
+          execution_place: string | null
+          filler_volunteer: string | null
+          follow_up_phone: string | null
+          follow_up_responsible: string | null
+          governorate: string | null
+          id: string
+          joker_name: string | null
+          latitude: number | null
+          longitude: number | null
+          mission_code: string
+          mission_name: string
+          mission_nature: string | null
+          mission_type: Database["public"]["Enums"]["mission_type"] | null
+          monitor_name: string | null
+          monitored_at: string | null
+          ops_entered_at: string | null
+          project_code: string
+          region: Database["public"]["Enums"]["region"] | null
+          reviewed_at: string | null
+          reviewer_volunteer: string | null
+          reviewing_supervisor: string | null
+          sent_to_supervisor_at: string | null
+          sent_to_youth_at: string | null
+          status: Database["public"]["Enums"]["mission_status"]
+          submitted_at: string | null
+          supervisor: string | null
+          team_code: string
+          transport_mode: Database["public"]["Enums"]["transport_mode"] | null
+          type_name: string | null
+          updated_at: string
+          youth_notes: string | null
+          youth_reviewer: string | null
+        }
+        Insert: {
+          activity_classification?: string | null
+          activity_date: string
+          activity_details?: string | null
+          activity_type?: string | null
+          admin_code?: string | null
+          classification?: string | null
+          classification_name?: string | null
+          completing_volunteer?: string | null
+          created_at?: string
+          created_by: string
+          data_sources?: Database["public"]["Enums"]["data_source"][] | null
+          execution_place?: string | null
+          filler_volunteer?: string | null
+          follow_up_phone?: string | null
+          follow_up_responsible?: string | null
+          governorate?: string | null
+          id?: string
+          joker_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          mission_code: string
+          mission_name: string
+          mission_nature?: string | null
+          mission_type?: Database["public"]["Enums"]["mission_type"] | null
+          monitor_name?: string | null
+          monitored_at?: string | null
+          ops_entered_at?: string | null
+          project_code: string
+          region?: Database["public"]["Enums"]["region"] | null
+          reviewed_at?: string | null
+          reviewer_volunteer?: string | null
+          reviewing_supervisor?: string | null
+          sent_to_supervisor_at?: string | null
+          sent_to_youth_at?: string | null
+          status?: Database["public"]["Enums"]["mission_status"]
+          submitted_at?: string | null
+          supervisor?: string | null
+          team_code: string
+          transport_mode?: Database["public"]["Enums"]["transport_mode"] | null
+          type_name?: string | null
+          updated_at?: string
+          youth_notes?: string | null
+          youth_reviewer?: string | null
+        }
+        Update: {
+          activity_classification?: string | null
+          activity_date?: string
+          activity_details?: string | null
+          activity_type?: string | null
+          admin_code?: string | null
+          classification?: string | null
+          classification_name?: string | null
+          completing_volunteer?: string | null
+          created_at?: string
+          created_by?: string
+          data_sources?: Database["public"]["Enums"]["data_source"][] | null
+          execution_place?: string | null
+          filler_volunteer?: string | null
+          follow_up_phone?: string | null
+          follow_up_responsible?: string | null
+          governorate?: string | null
+          id?: string
+          joker_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          mission_code?: string
+          mission_name?: string
+          mission_nature?: string | null
+          mission_type?: Database["public"]["Enums"]["mission_type"] | null
+          monitor_name?: string | null
+          monitored_at?: string | null
+          ops_entered_at?: string | null
+          project_code?: string
+          region?: Database["public"]["Enums"]["region"] | null
+          reviewed_at?: string | null
+          reviewer_volunteer?: string | null
+          reviewing_supervisor?: string | null
+          sent_to_supervisor_at?: string | null
+          sent_to_youth_at?: string | null
+          status?: Database["public"]["Enums"]["mission_status"]
+          submitted_at?: string | null
+          supervisor?: string | null
+          team_code?: string
+          transport_mode?: Database["public"]["Enums"]["transport_mode"] | null
+          type_name?: string | null
+          updated_at?: string
+          youth_notes?: string | null
+          youth_reviewer?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          approved: boolean
+          created_at: string
+          department_code: string | null
+          email: string
+          full_name: string | null
+          id: string
+          region: Database["public"]["Enums"]["region"] | null
+          team_code: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved?: boolean
+          created_at?: string
+          department_code?: string | null
+          email: string
+          full_name?: string | null
+          id?: string
+          region?: Database["public"]["Enums"]["region"] | null
+          team_code?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved?: boolean
+          created_at?: string
+          department_code?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          region?: Database["public"]["Enums"]["region"] | null
+          team_code?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_dropdown_options: {
+        Row: {
+          created_at: string
+          id: string
+          option_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_dropdown_options_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "dropdown_options"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      volunteer_notes: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          mission_id: string
+          note: string | null
+          note_type: Database["public"]["Enums"]["volunteer_note_type"]
+          volunteer_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          mission_id: string
+          note?: string | null
+          note_type: Database["public"]["Enums"]["volunteer_note_type"]
+          volunteer_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          mission_id?: string
+          note?: string | null
+          note_type?: Database["public"]["Enums"]["volunteer_note_type"]
+          volunteer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "volunteer_notes_mission_id_fkey"
+            columns: ["mission_id"]
+            isOneToOne: false
+            referencedRelation: "missions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "volunteer_notes_volunteer_id_fkey"
+            columns: ["volunteer_id"]
+            isOneToOne: false
+            referencedRelation: "mission_volunteers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_mission_code: {
+        Args: { _project_code: string; _team_code: string }
+        Returns: string
+      }
+      has_any_role: {
+        Args: {
+          _roles: Database["public"]["Enums"]["app_role"][]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role:
+        | "admin"
+        | "data_manager"
+        | "department_entry"
+        | "operations_room"
+        | "operations_supervisor"
+        | "joker"
+        | "youth_room"
+        | "stakeholder"
+      data_source: "whatsapp" | "wireless" | "phone"
+      mission_status:
+        | "planned"
+        | "coded"
+        | "entered"
+        | "reviewed"
+        | "sent_to_youth"
+        | "sent_to_supervisor"
+        | "monitored"
+      mission_type: "internal" | "external"
+      region: "delta" | "saaid" | "qanal" | "markaz_3am"
+      transport_mode: "public" | "driver"
+      volunteer_change_reason:
+        | "apologized"
+        | "redirected"
+        | "unavailable"
+        | "other"
+      volunteer_note_type:
+        | "not_renewed"
+        | "not_present"
+        | "membership_number"
+        | "base_not_updated"
+        | "separated"
+        | "suspended"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +678,44 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: [
+        "admin",
+        "data_manager",
+        "department_entry",
+        "operations_room",
+        "operations_supervisor",
+        "joker",
+        "youth_room",
+        "stakeholder",
+      ],
+      data_source: ["whatsapp", "wireless", "phone"],
+      mission_status: [
+        "planned",
+        "coded",
+        "entered",
+        "reviewed",
+        "sent_to_youth",
+        "sent_to_supervisor",
+        "monitored",
+      ],
+      mission_type: ["internal", "external"],
+      region: ["delta", "saaid", "qanal", "markaz_3am"],
+      transport_mode: ["public", "driver"],
+      volunteer_change_reason: [
+        "apologized",
+        "redirected",
+        "unavailable",
+        "other",
+      ],
+      volunteer_note_type: [
+        "not_renewed",
+        "not_present",
+        "membership_number",
+        "base_not_updated",
+        "separated",
+        "suspended",
+      ],
+    },
   },
 } as const
