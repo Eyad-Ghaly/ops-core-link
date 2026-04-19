@@ -3,8 +3,20 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index.tsx";
+import Auth from "./pages/Auth.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import DepartmentEntry from "./pages/DepartmentEntry.tsx";
+import OperationsRoom from "./pages/OperationsRoom.tsx";
+import Joker from "./pages/Joker.tsx";
+import Supervisor from "./pages/Supervisor.tsx";
+import Youth from "./pages/Youth.tsx";
+import Dashboard from "./pages/Dashboard.tsx";
+import DataManager from "./pages/DataManager.tsx";
+import Admin from "./pages/Admin.tsx";
+import MissionDetail from "./pages/MissionDetail.tsx";
 
 const queryClient = new QueryClient();
 
@@ -12,13 +24,24 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
-      <Sonner />
+      <Sonner position="top-center" richColors closeButton />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/department-entry" element={<ProtectedRoute roles={["department_entry"]}><DepartmentEntry /></ProtectedRoute>} />
+            <Route path="/operations-room" element={<ProtectedRoute roles={["operations_room", "operations_supervisor"]}><OperationsRoom /></ProtectedRoute>} />
+            <Route path="/joker" element={<ProtectedRoute roles={["joker"]}><Joker /></ProtectedRoute>} />
+            <Route path="/supervisor" element={<ProtectedRoute roles={["operations_supervisor"]}><Supervisor /></ProtectedRoute>} />
+            <Route path="/youth" element={<ProtectedRoute roles={["youth_room"]}><Youth /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute roles={["stakeholder", "data_manager"]}><Dashboard /></ProtectedRoute>} />
+            <Route path="/data-manager" element={<ProtectedRoute roles={["data_manager"]}><DataManager /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute roles={["admin"]}><Admin /></ProtectedRoute>} />
+            <Route path="/missions/:id" element={<ProtectedRoute><MissionDetail /></ProtectedRoute>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
