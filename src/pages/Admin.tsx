@@ -63,7 +63,8 @@ function UsersTab() {
   };
 
   const updateField = async (p: ProfileRow, field: "team_code" | "department_code", value: string) => {
-    await supabase.from("profiles").update({ [field]: value }).eq("id", p.id);
+    const patch = field === "team_code" ? { team_code: value } : { department_code: value };
+    await supabase.from("profiles").update(patch).eq("id", p.id);
     load();
   };
 
