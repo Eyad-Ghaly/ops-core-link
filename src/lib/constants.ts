@@ -14,7 +14,7 @@ export type AppRole = keyof typeof ROLES;
 export const STATUS_LABELS: Record<string, string> = {
   planned: "مخطط لها",
   coded: "تم التكويد من الفريق",
-  entered: "تم مراجعة الغرفة",
+  entered: "تم مراجعة العمليات",
   reviewed: "تم مراجعة الجوكر",
   sent_to_youth: "تم مراجعة الشباب",
   sent_to_supervisor: "تم الإرسال للمشرف",
