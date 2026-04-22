@@ -323,7 +323,7 @@ export default function MissionDetail() {
         <Card className="card-elevated p-5">
           <div className="flex flex-wrap gap-2 justify-end">
             {canEdit && <Button variant="outline" onClick={() => save()} disabled={busy}><Save className="w-4 h-4 ms-2" />حفظ</Button>}
-            {isOps && <Button onClick={() => transition("entered", "تم مراجعة الغرفة - أُرسلت للجوكر")} disabled={busy}><Send className="w-4 h-4 ms-2" />إرسال للجوكر</Button>}
+            {isOps && <Button onClick={() => transition("entered", "تم مراجعة العمليات - أُرسلت للجوكر")} disabled={busy}><Send className="w-4 h-4 ms-2" />إرسال للجوكر</Button>}
             {isJoker && (
               <Button onClick={() => transition("reviewed", "تم مراجعة الجوكر - أُرسلت للشباب")} disabled={busy}><Send className="w-4 h-4 ms-2" />إرسال لغرفة الشباب</Button>
             )}
