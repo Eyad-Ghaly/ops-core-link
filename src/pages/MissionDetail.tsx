@@ -84,35 +84,48 @@ export default function MissionDetail() {
     toast.success(label);
   };
 
+  const reloadVolunteers = async () => {
+    const { data } = await supabase.from("mission_volunteers").select("*").eq("mission_id", mission.id).order("created_at");
+    setVolunteers(data ?? []);
+  };
+  const reloadDrivers = async () => {
+    const { data } = await supabase.from("mission_drivers").select("*").eq("mission_id", mission.id);
+    setDrivers(data ?? []);
+  };
+  const reloadRoutes = async () => {
+    const { data } = await supabase.from("mission_routes").select("*").eq("mission_id", mission.id).order("position");
+    setRoutes(data ?? []);
+  };
+
   // Volunteer ops
   const addVol = async () => {
     await supabase.from("mission_volunteers").insert({ mission_id: mission.id, full_name: "متطوع جديد", added_in_ops: true });
-    load();
+    reloadVolunteers();
   };
   const updateVol = async (vid: string, patch: any) => {
     await supabase.from("mission_volunteers").update(patch).eq("id", vid);
-    load();
+    reloadVolunteers();
   };
   const removeVol = async (vid: string) => {
     await supabase.from("mission_volunteers").update({ removed: true }).eq("id", vid);
-    load();
+    reloadVolunteers();
   };
 
   // Drivers
   const addDriver = async () => {
     await supabase.from("mission_drivers").insert({ mission_id: mission.id, driver_name: "" });
-    load();
+    reloadDrivers();
   };
-  const updateDriver = async (did: string, patch: any) => { await supabase.from("mission_drivers").update(patch).eq("id", did); load(); };
-  const delDriver = async (did: string) => { await supabase.from("mission_drivers").delete().eq("id", did); load(); };
+  const updateDriver = async (did: string, patch: any) => { await supabase.from("mission_drivers").update(patch).eq("id", did); reloadDrivers(); };
+  const delDriver = async (did: string) => { await supabase.from("mission_drivers").delete().eq("id", did); reloadDrivers(); };
 
   // Routes
   const addRoute = async () => {
     await supabase.from("mission_routes").insert({ mission_id: mission.id, place: "", position: routes.length });
-    load();
+    reloadRoutes();
   };
-  const updateRoute = async (rid: string, patch: any) => { await supabase.from("mission_routes").update(patch).eq("id", rid); load(); };
-  const delRoute = async (rid: string) => { await supabase.from("mission_routes").delete().eq("id", rid); load(); };
+  const updateRoute = async (rid: string, patch: any) => { await supabase.from("mission_routes").update(patch).eq("id", rid); reloadRoutes(); };
+  const delRoute = async (rid: string) => { await supabase.from("mission_routes").delete().eq("id", rid); reloadRoutes(); };
 
   return (
     <AppLayout title={`المهمة ${mission.mission_code}`}>
