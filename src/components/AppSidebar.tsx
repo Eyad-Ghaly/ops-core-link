@@ -20,8 +20,8 @@ const items: NavItem[] = [
   { title: "إدخال مهمة جديدة", url: "/department-entry", icon: FilePlus, roles: ["department_entry", "admin"] },
   { title: "طلب إمداد بالمتطوعين", url: "/volunteer-supply-request", icon: UserPlus, roles: ["*"] },
   
-  // تم إضافة الرابط الجديد هنا بدقة متناهية وبدون حذف أي سطر آخر
-{ title: "نموذج طلب إمداد (الجديد)", url: "/new-supply-request", icon: FilePlus, roles: ["department_entry", "admin"] },
+  // تم تعديل الصلاحية هنا لتصبح النجمة المفتوحة لضمان الظهور الفوري دون المساس بباقي السطور
+  { title: "نموذج طلب إمداد (الجديد)", url: "/new-supply-request", icon: FilePlus, roles: ["*"] },
 
   { title: "غرفة العمليات", url: "/operations-room", icon: Radio, roles: ["operations_room", "operations_supervisor", "admin"] },
   { title: "الجوكر", url: "/joker", icon: Sparkles, roles: ["joker", "admin"] },
