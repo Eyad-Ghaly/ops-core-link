@@ -21,7 +21,7 @@ const items: NavItem[] = [
   { title: "طلب إمداد بالمتطوعين", url: "/volunteer-supply-request", icon: UserPlus, roles: ["*"] },
   
   // تم إضافة الرابط الجديد هنا بدقة متناهية وبدون حذف أي سطر آخر
-  { title: "نموذج طلب إمداد (الجديد)", url: "/new-supply-request", icon: FilePlus, roles: ["*"] },
+{ title: "نموذج طلب إمداد (الجديد)", url: "/new-supply-request", icon: FilePlus, roles: ["department_entry", "admin"] },
 
   { title: "غرفة العمليات", url: "/operations-room", icon: Radio, roles: ["operations_room", "operations_supervisor", "admin"] },
   { title: "الجوكر", url: "/joker", icon: Sparkles, roles: ["joker", "admin"] },
