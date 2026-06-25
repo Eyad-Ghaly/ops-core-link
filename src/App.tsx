@@ -19,7 +19,8 @@ import Admin from "./pages/Admin.tsx";
 import MissionDetail from "./pages/MissionDetail.tsx";
 import VolunteerSupplyRequest from "./pages/VolunteerSupplyRequest.tsx";
 import NewSupplyRequest from "./pages/NewSupplyRequest"; // بدون .tsx// تم إضافة الاستيراد هنا بدقة
-
+// 2. جوه الـ <Routes> ضيف المسار الجديد
+<Route path="/new-supply-request" element={<NewSupplyRequest />} />
 const queryClient = new QueryClient();
 
 const App = () => (
